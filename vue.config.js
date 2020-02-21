@@ -1,6 +1,6 @@
 module.exports = {
   pwa: {
-    name: "ProOps",
+    name: "EKD Staff",
     appleMobileWebAppCapable: "yes",
     appleMobileWebAppStatusBarStyle: "black",
 
