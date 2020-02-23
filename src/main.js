@@ -23,6 +23,14 @@ firebase.initializeApp({
   appId: "1:627663689313:web:47a7ea95f4acfcdaf83c20"
 });
 
+// Detect if the user is using a mobile device
+const isMobile = navigator.userAgent.match(
+  /(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i
+);
+console.log("isMobile: ", isMobile);
+if (!isMobile)
+  alert("Please use this app only on mobile for a better experience!");
+
 // Wait for firebase to finish initialization before creating the app.
 // So that the router navigation wont break due to invalid auth
 firebase.auth().onAuthStateChanged(() => {
