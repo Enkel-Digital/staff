@@ -21,20 +21,12 @@
     <p><i>*Ordered by latest event</i></p>
     <table>
       <tr>
-        <th>Name</th>
-        <th>Device</th>
-        <th>ID</th>
-        <th>Status</th>
-        <th>time</th>
-        <th>Email</th>
+        <th>Time</th>
+        <th>Event</th>
       </tr>
       <tr v-for="snapshot in history" v-bind:key="snapshot.historyId">
-        <td>{{ snapshot.name }}</td>
-        <td>{{ snapshot.device }}</td>
-        <td>{{ snapshot.id }}</td>
-        <td>{{ snapshot.status }}</td>
         <td>{{ snapshot.time }}</td>
-        <td>{{ snapshot.email }}</td>
+        <td>{{ snapshot.event }}</td>
       </tr>
     </table>
   </div>
@@ -49,12 +41,13 @@ export default {
     NavigationBar
   },
   data() {
-    const user_email = this.$store.state.email;
+    const user = this.$store.state.user;
+    const { email, name } = user;
     return {
-      email: user_email,
-      name: this.$store.state.name,
+      email,
+      name,
       history: this.$store.state.history.filter(
-        history => history.email === user_email
+        history => history.email === email
       ),
       error_msg: "",
       edit: false
