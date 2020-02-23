@@ -31,12 +31,25 @@ console.log("isMobile: ", isMobile);
 if (!isMobile)
   alert("Please use this app only on mobile for a better experience!");
 
-// Wait for firebase to finish initialization before creating the app.
-// So that the router navigation wont break due to invalid auth
-firebase.auth().onAuthStateChanged(() => {
-  new Vue({
-    router,
-    store,
-    render: h => h(App)
-  }).$mount("#app");
-});
+// Auth state is persisted even when window is closed, an explicit sign out is needed to clear state
+firebase
+  .auth()
+  .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+  .then(function() {
+    // Wait for firebase to finish initialization before creating the app.
+    // So that the router navigation wont break due to invalid auth
+    firebase.auth().onAuthStateChanged(() => {
+      new Vue({
+        router,
+        store,
+        render: h => h(App)
+      }).$mount("#app");
+    });
+  })
+  .catch(function(error) {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(errorCode, errorMessage);
+    alert("Application Error, notify developer.");
+  });
