@@ -3,6 +3,7 @@ import AuthType from "./AuthType";
 
 /** @notice Pre-Load all components for frequently used routes */
 import HomeComponent from "@/views/Home.vue";
+import FormComponent from "@/views/Form.vue";
 import TeamComponent from "@/views/Team.vue";
 
 /**
@@ -28,7 +29,13 @@ const routes = [
   {
     path: "/form",
     name: "form",
-    component: () => import("@/views/Form.vue"),
+    component: FormComponent,
+    meta: { Auth_requirements: AuthType.private }
+  },
+  {
+    path: "/report-issue",
+    name: "report-issue",
+    component: () => import("@/views/ReportIssue.vue"),
     meta: { Auth_requirements: AuthType.private }
   },
   {

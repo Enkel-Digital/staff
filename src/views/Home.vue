@@ -12,7 +12,7 @@
       <br />
       <br />
     </router-link>
-    <router-link class="button" to="/faulty">
+    <router-link class="button" to="/report-issue">
       <img
         alt="Faulty Icon"
         src="../assets/faulty.jpg"
