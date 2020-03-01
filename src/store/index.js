@@ -1,11 +1,9 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
 
 // Import server communication modules
 import users from "./users";
-
-// Import serverless function call
-// import notifyManager from "./notifyManager";
 
 Vue.use(Vuex);
 
@@ -33,5 +31,6 @@ export default new Vuex.Store({
     load_data: function({ commit }) {
       commit("update_data", {});
     }
-  }
+  },
+  plugins: [createPersistedState()]
 });
