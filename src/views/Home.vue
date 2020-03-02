@@ -13,22 +13,12 @@
       <br />
     </router-link>
     <router-link class="button" to="/report-issue">
-      <img
-        alt="Faulty Icon"
-        src="../assets/faulty.jpg"
-        width="110"
-        height="84"
-      />
+      <img alt="Faulty Icon" src="../assets/gear.jpg" width="110" height="84" />
       <br />
       Report issue
     </router-link>
     <router-link class="button" to="/profile">
-      <img
-        alt="Faulty Icon"
-        src="../assets/faulty.jpg"
-        width="110"
-        height="84"
-      />
+      <img alt="Faulty Icon" src="../assets/gear.jpg" width="110" height="84" />
       <br />
       Profile
     </router-link>
