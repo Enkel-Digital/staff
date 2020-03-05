@@ -2,6 +2,14 @@
   <div class="profile">
     <NavigationBar />
 
+    <img
+      id="image"
+      src="../assets/logo_square.png"
+      alt="EKD Logo"
+      width="360"
+      height="360"
+    />
+
     <h3>Profile Page</h3>
 
     <p class="error">{{ error_msg }}</p>
