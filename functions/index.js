@@ -1,27 +1,27 @@
+"use strict";
+
 const sgMail = require("@sendgrid/mail");
 const functions = require("firebase-functions");
 
 sgMail.setApiKey(functions.config().sendgrid_api.key);
 
-exports.notifyDTM = functions.https.onRequest(async (req, res) => {
+exports.signUpRequest = functions.https.onRequest(async (req, res) => {
   // Parse the body string into JSON
   const data = JSON.parse(req.body);
 
-  let html =
-    "<h3>Hello DTMs</h3><br />There is a new faulty device reported by a staff!<hr />";
+  // Call the database to insert the new user, but the allowed field put as false first
 
-  // Add all data to the HTML mail body with newlines
-  for (let [key, value] of Object.entries(data))
-    html += `<br />${key}: ${value}`;
-
-  // Construct the message object
+  // Send the admins a email
   const msg = {
-    to: "proops.dtm@enkeldigital.com",
-    from: "proops.notification@enkeldigital.com",
-    subject: `Faulty device reported on ${data.time}`,
-    html
+    to: "admin@enkeldigital.com",
+    from: "staff.app@enkeldigital.com",
+    subject: `New account requested by: ${data.email}`,
+    html:
+      `New account for staff app/portal requested on<br />${new Date()}` +
+      `<br />Email: ${data.email}<br />Name: ${data.name}<br />` +
+      "Check on the app for more details and to approve request."
   };
   await sgMail.send(msg);
 
-  res.status(200).end();
+  res.status(201).json({ success: true });
 });
