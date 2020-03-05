@@ -19,15 +19,7 @@
     <input
       type="text"
       v-model="email"
-      placeholder="Username"
-      @keypress.enter="signUp"
-      required
-    />
-    <br />
-    <input
-      type="password"
-      v-model="password"
-      placeholder="Password"
+      placeholder="Email"
       @keypress.enter="signUp"
       required
     />
@@ -44,9 +36,10 @@
  * @Todo - Add in browser's "required" attribute checker for input.
  */
 
-import firebase from "firebase";
+import post from "../utils/post";
 
 // Function to map and return a given err.code to a user friendly message
+// eslint-disable-next-line no-unused-vars
 function error_msg(err) {
   switch (err.code) {
     case "auth/network-request-failed":
@@ -64,7 +57,6 @@ export default {
     return {
       email: "",
       name: "",
-      password: "",
       error_msg: ""
     };
   },
@@ -72,29 +64,23 @@ export default {
     back() {
       this.$router.push({ name: "welcome" });
     },
-    signUp() {
-      // After signup, user will be automatically signed in, thus redirect to home
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then(usr => {
-          // Save user's email to vuex and update the user's name
-          this.$store.commit("update_email", usr.user.email);
-          this.$store.commit("update_name", this.name);
+    async signUp() {
+      try {
+        // Make a signup request for the specified user and email
+        const response = await post(
+          "https://us-central1-ekd-staff.cloudfunctions.net/signUpRequest",
+          {
+            email: this.email,
+            name: this.name
+          }
+        );
 
-          // Route to the user's home page, after login
-          this.$router.replace({ name: "home", params: { user: name } });
-        })
-        .catch(err => {
-          // Set the message into the error box to show user the error
-          this.error_msg = error_msg(err);
-        });
+        alert("Signup request sent, check your email inbox later for approval");
+      } catch (error) {
+        // Set the message into the error box to show user the error
+        this.error_msg = error_msg(error);
+      }
     }
-  },
-  beforeCreate() {
-    // Route back to welcome page as page implementation not completed yet
-    this.$router.replace({ name: "welcome" });
-    alert("Signup not available yet!");
   }
 };
 </script>
