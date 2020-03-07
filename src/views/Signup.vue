@@ -36,7 +36,7 @@
  * @Todo - Add in browser's "required" attribute checker for input.
  */
 
-import post from "../utils/post";
+import { newSignupRequest } from "../backend";
 
 // Function to map and return a given err.code to a user friendly message
 // eslint-disable-next-line no-unused-vars
@@ -67,13 +67,10 @@ export default {
     async signUp() {
       try {
         // Make a signup request for the specified user and email
-        const response = await post(
-          "https://us-central1-ekd-staff.cloudfunctions.net/signUpRequest",
-          {
-            email: this.email,
-            name: this.name
-          }
-        );
+        const response = await newSignupRequest({
+          email: this.email,
+          name: this.name
+        });
 
         alert("Signup request sent, check your email inbox later for approval");
       } catch (error) {
