@@ -22,7 +22,8 @@ exports.signUpRequest = functions.https.onRequest(async (req, res) => {
     await docRef.set({
       email: data.email,
       name: data.name,
-      accountStatus: "PENDING APPROVAL"
+      accountStatus: "PENDING APPROVAL",
+      accountType: "USER"
     });
   } catch (error) {
     // Send the admins a email to notify if DB update failed
