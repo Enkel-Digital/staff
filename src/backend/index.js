@@ -2,13 +2,5 @@
  * Folder with functions that wrap over backend calls for abstraction
  */
 
-import post from "../utils/post";
-
-function newSignupRequest(signupRequestDetails) {
-  return post(
-    "https://us-central1-ekd-staff.cloudfunctions.net/signUpRequest",
-    signupRequestDetails
-  );
-}
-
-export { newSignupRequest };
+export { default as newSignupRequest } from "./newSignupRequest";
+export { default as getUserDetails } from "./getUserDetails";
