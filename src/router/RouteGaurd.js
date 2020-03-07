@@ -1,6 +1,7 @@
 // Import AuthType Enum
 import AuthType from "./AuthType";
 import firebase from "firebase";
+import store from "../store";
 
 /**
  * @function requiredAuth
@@ -14,7 +15,8 @@ function requiredAuth(route) {
   return {
     public: Auth_requirements === AuthType.public,
     public_only: Auth_requirements === AuthType.public_only,
-    private: Auth_requirements === AuthType.private
+    private: Auth_requirements === AuthType.private,
+    admin: Auth_requirements === AuthType.admin
   };
 }
 
@@ -35,9 +37,21 @@ function AuthChecker(to, from, next) {
    * @notice Hard coded routes based on authentication status or proceed to route user requested for.
    */
   // If route is auth protected and user not logged in, redirect to welcome page
-  if (AuthType_required_is.private && !currentUser) next({ name: "welcome" });
+  if (
+    (AuthType_required_is.private || AuthType_required_is.admin) &&
+    !currentUser
+  )
+    next({ name: "welcome" });
   // If route is public only and user is logged in, redirect to default private route of home
   else if (AuthType_required_is.public_only && currentUser)
+    next({ name: "home" });
+  // If user is logged in and route is admin only,
+  // and user is not admin or if user account is not already created, redirect to welcome page
+  else if (
+    AuthType_required_is.admin &&
+    (store.state.accountStatus !== "CREATED" ||
+      store.state.accountType !== "ADMIN")
+  )
     next({ name: "home" });
   // Else, just continue navigation as per user request.
   else next();

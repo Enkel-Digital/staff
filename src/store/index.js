@@ -11,7 +11,9 @@ export default new Vuex.Store({
   state: {
     user: {
       email: "",
-      name: ""
+      name: "",
+      accountStatus: "",
+      accountType: ""
     },
     history: []
   },
